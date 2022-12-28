@@ -1,0 +1,60 @@
+/// <reference types ="Cypress" />
+describe("test the contact us via the uni using udemy course mocha class 10",()=>{
+    it.only("1-Login Successfully with correct credentials",()=>{
+    cy.visit("https://www.jobtrain.co.uk/ybscareers/client/")
+    cy.wait(2000)
+    //cy.document().should('have.property', 'charset').and('eq','UTF-8') //validate the active doc have specific property
+    //cy.title().should('include', 'Jobtrain')
+     cy.get('.text-muted').contains('© 1998 - 2022 Jobtrain Ltd. All rights reserved.')
+    cy.get('#inputEmail').type('ybs')
+    cy.get('#inputEmail').should('have.attr','name', 'userName')
+    cy.get('#inputPassword').type('21ClientL@')
+    cy.get('#inputPassword').should('have.attr','name', 'password')
+    cy.get('.form-signin > .btn').click()
+    cy.url().should('include', 'Home')
+    cy.document().should('have.property', 'charset').and('eq', 'UTF-8') //verify the active page or document with this query
+   // cy.title().should('eq','Jobtrain')    //same command
+    cy.title().should('include','Jobtrain')
+   cy.url().should('include', 'Home')
+    cy.get('.card-header').contains('Time to...').click() //using chain command to use short code
+   cy.get('app-timetoapprovereport > .card > .card-header > .d-inline-block > #RightMenu > .menu-icon > #cap_menu').click()
+   cy.get('.timeToApproveDropdown').find('.monthly').click()  //we can also add index that is eq(0) before
+    console.log("Non cypress command, and asynco nature") // javascript /line
+    cy.log("Cypress command, test has been completed")  //cy . all are cypress commands
+
+// In Non cypress commands that is promises and then is used to set the order of execution
+// as we can see the below run the time to recruite then function is cardheadertextused jquery to extract the card that is .text lec#21 
+// cy.get('.card-header').contains('Time to...').click().then(function(cardHeaderText){
+// console.log("selected the following items!" +cardHeaderText.text())
+// })
+
+
+// cy.get('.text-left').then(function(cardHeaderTextS){
+//     console.log("second card header" +cardHeaderTextS.text())
+
+// })
+// cy.get('.card-header').contains('Time to...').click()
+// console.log("Time to recrute ...")
+
+cy.get('.card-header').contains('Time to...').click().then(($el)=>{
+var textr =$el.text()
+ console.log(textr)
+    })
+    cy.wait(2000)
+    
+   cy.get('#JobHeader').click().contains('JOBS')
+   cy.wait(2000)
+   //Define constant like below not recomended
+//    const AddajobLink =cy.get("a[href*='AddJob']").contains("Add a job")
+//    AddajobLink.click()
+
+cy.get("a[href*='AddJob']").contains("Add a job").click()  //same approach as above line # 47 not used const
+
+cy.get('.addJobJobDetailChoice').contains('Add a job')  //we can also use the 39 line to onward correct both
+expect(true).to.be.true //explicit assertions
+// let name ='Umar'
+// expect(name).to.be.equal('Umar')
+assert.equal(4,4 , 'no error')
+
+})
+});
